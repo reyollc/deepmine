@@ -520,7 +520,7 @@ public final class MinerTask {
 
         lookAt(p, Vec3.atCenterOf(pos));
         if (mc.gameMode.continueDestroyBlock(pos, faceToward(p.getEyePosition(), pos))) {
-            p.swing(InteractionHand.MAIN_HAND);
+            Compat.swingAttack(p);
         }
     }
 
@@ -601,7 +601,7 @@ public final class MinerTask {
         lookAt(p, hit);
         mc.gameMode.useItemOn(p, InteractionHand.MAIN_HAND,
                 new BlockHitResult(hit, Direction.UP, under, false));
-        p.swing(InteractionHand.MAIN_HAND);
+        Compat.swingUse(p);
     }
 
     private void walk(LocalPlayer p, ClientLevel level) {
@@ -666,7 +666,7 @@ public final class MinerTask {
         lookAt(p, hit);
         mc.gameMode.useItemOn(p, InteractionHand.MAIN_HAND,
                 new BlockHitResult(hit, Direction.UP, floor, false));
-        p.swing(InteractionHand.MAIN_HAND);
+        Compat.swingUse(p);
     }
 
     // ---------------------------- Essen --------------------------------
@@ -795,7 +795,7 @@ public final class MinerTask {
 
         if (p.getAttackStrengthScale(0.0f) >= 1.0f) {
             mc.gameMode.attack(p, target);
-            p.swing(InteractionHand.MAIN_HAND);
+            Compat.swingAttack(p);
         }
     }
 
@@ -934,7 +934,7 @@ public final class MinerTask {
             lookAt(p, hit);
             mc.gameMode.useItemOn(p, InteractionHand.MAIN_HAND,
                     new BlockHitResult(hit, face, support, false));
-            p.swing(InteractionHand.MAIN_HAND);
+            Compat.swingUse(p);
             return true;
         }
         return false;
@@ -1231,7 +1231,7 @@ public final class MinerTask {
         selectSlot(p, mineSlot);
         lookAt(p, Vec3.atCenterOf(boxPos));
         if (mc.gameMode.continueDestroyBlock(boxPos, faceToward(p.getEyePosition(), boxPos))) {
-            p.swing(InteractionHand.MAIN_HAND);
+            Compat.swingAttack(p);
         }
     }
 

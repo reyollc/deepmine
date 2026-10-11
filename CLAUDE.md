@@ -1,6 +1,6 @@
 # DeepMine
 
-Clientseitiger Fabric-Mod für Minecraft 26.2. Gräbt einen 1 Block breiten und
+Clientseitiger Fabric-Mod für Minecraft 26.2 und 26.3. Gräbt einen 1 Block breiten und
 standardmäßig 4 Blöcke hohen Gang als quadratische Auswärtsspirale um einen
 Beacon, solange Haste II reicht.
 
@@ -29,6 +29,7 @@ JAVA_HOME zeigt auf diesem Rechner auf JDK 21. Vorher setzen:
 | `Settings.java` | Einstellungen plus Laden/Speichern `config/deepmine.json`. |
 | `JobStore.java` | Laufender Auftrag, `config/deepmine-job.json`. |
 | `Chat.java` | Alle Chat-Ausgaben, Farben, Sprachschlüssel. |
+| `Compat.java` | Die einzige Stelle, an der 26.2 und 26.3 auseinandergehen. |
 | `DeepMine.java` | Einstiegspunkt, Brigadier-Befehle, Tick-Hook. |
 
 Wegen `splitEnvironmentSourceSets()` im Buildskript liegen die Quellen unter
@@ -50,6 +51,23 @@ in diesem Projekt sind bisher aufgefallen: `MobEffects.DIG_SPEED` → `HASTE`,
 `ClickType` → `ContainerInput`, `ResourceLocation` → `Identifier`,
 `Item.getDescription()` existiert nicht. Älterer Beispielcode aus dem Netz ist
 hier regelmäßig falsch.
+
+**Zwei Minecraft-Versionen, eine Jar.** In `gradle.properties` stehen
+`minecraft_version` und `fabric_api_version`; nach einer Änderung an
+Minecraft-Aufrufen gegen **beide** bauen, sonst fällt eine Signaturänderung
+erst beim Spieler auf:
+
+```
+# 26.3: minecraft_version=26.3, fabric_api_version=0.162.0+26.3
+./gradlew build
+# danach zurück auf 26.2 und nochmal
+```
+
+Was sich unterscheidet, gehört nach `Compat.java` und muss über Reflection
+laufen — ein Jar, das eine nur in 26.3 vorhandene Klasse im Bytecode erwähnt,
+lädt unter 26.2 nicht. Mit `javap -c` prüfen, dass im Konstantenpool keine
+versionsspezifische Klasse auftaucht. Ausgeliefert wird der Build gegen die
+**ältere** Version.
 
 **Texte gehören in die Sprachdateien**, nicht in den Code. `assets/deepmine/lang/`
 hat `en_us.json` und `de_de.json`; beide müssen dieselben Schlüssel haben, sonst

@@ -1,6 +1,6 @@
 # DeepMine
 
-Client-side Fabric mod for Minecraft 26.2. Digs a 1-block-wide, 4-block-high
+Client-side Fabric mod for Minecraft 26.2 and 26.3. Digs a 1-block-wide, 4-block-high
 corridor as a square outward spiral around a beacon, for as long as the beacon's
 Haste II reaches. Ores come out with Silk Touch, torches go in wherever it is
 dark, and the rubble goes into shulker boxes you carry with you.
@@ -21,7 +21,7 @@ clearing the whole Haste zone without you holding the mouse button for two hours
 
 | | |
 |---|---|
-| Minecraft | 26.2 |
+| Minecraft | 26.2 and 26.3 |
 | Mod loader | Fabric, loader 0.18.4 or newer |
 | Dependency | Fabric API |
 | Java | 25 |
@@ -167,7 +167,7 @@ MIT, see [LICENSE](LICENSE).
 
 ## Kurzfassung auf Deutsch
 
-Clientseitiger Fabric-Mod für Minecraft 26.2. Gräbt einen 1 Block breiten und
+Clientseitiger Fabric-Mod für Minecraft 26.2 und 26.3. Gräbt einen 1 Block breiten und
 4 Blöcke hohen Gang als quadratische Auswärtsspirale um einen Beacon, solange
 die Eile II des Beacons reicht. Erz kommt mit Silk Touch heraus, Fackeln gehen
 ins Dunkle, der Schutt in mitgeführte Shulker.

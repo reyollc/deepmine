@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.11.0
+
+- Supports Minecraft 26.3 alongside 26.2, from the same jar.
+- `LivingEntity.swing` gained two parameters in 26.3 and the old signature is
+  gone, so the arm animation now goes through a small compatibility helper that
+  picks the right one at load time. Everything else is identical between the two
+  versions; that is checked by compiling against both.
+
 ## 1.10.0
 
 - Mass-storage boxes now only accept full stacks; a started stack stays in the
