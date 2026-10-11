@@ -16,8 +16,8 @@ gibt.
 ./gradlew build          # JDK 25 nötig, Jar landet in build/libs/
 ```
 
-JAVA_HOME zeigt auf diesem Rechner auf JDK 21. Vorher setzen:
-`export JAVA_HOME="/c/Program Files/Java/jdk-25.0.4.1"`.
+Falls JAVA_HOME auf ein älteres JDK zeigt, vorher setzen:
+`export JAVA_HOME=/pfad/zu/jdk-25`.
 
 ## Struktur
 
@@ -41,7 +41,7 @@ Wegen `splitEnvironmentSourceSets()` im Buildskript liegen die Quellen unter
 entpackt im Loom-Cache:
 
 ```
-javap -classpath 'C:\Users\yanni\.gradle\caches\fabric-loom\26.2\minecraft-client.jar' net.minecraft.world.effect.MobEffects
+javap -classpath "$HOME/.gradle/caches/fabric-loom/26.2/minecraft-client.jar" net.minecraft.world.effect.MobEffects
 ```
 
 In 26.1+ gibt es nur noch Mojang-Mappings, Yarn wird nicht mehr gepflegt. Allein
