@@ -1,0 +1,20 @@
+{
+	"schemaVersion": 1,
+	"id": "deepmine",
+	"version": "${version}",
+	"name": "DeepMine",
+	"description": "Digs a 1x4 tunnel as an outward spiral around a beacon while Haste II lasts. Silk Touch for ores, torches where it is dark, shulkers for the rubble.",
+	"authors": ["Reyollc"],
+	"license": "MIT",
+	"icon": "assets/deepmine/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": ["de.reyollc.deepmine.DeepMine"]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~26.2",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
