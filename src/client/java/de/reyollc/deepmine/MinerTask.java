@@ -143,7 +143,7 @@ public final class MinerTask {
     private State healResume = State.PICK;
     private int[] currentStep;
     private BlockPos targetCell;
-    private boolean oresScanned;
+    private boolean neighboursScanned;
     private int noHasteTicks;
     private int lightDelay;
     private int stallTicks;
@@ -277,7 +277,7 @@ public final class MinerTask {
         if (targetCell != null) {
             digQueue.clear();
             for (int dy = height - 1; dy >= 0; dy--) digQueue.add(targetCell.above(dy));
-            oresScanned = false;
+            neighboursScanned = false;
             settleWait = 0;
             gravelTorchPlaced = false;
             state = State.DIG;
@@ -451,7 +451,7 @@ public final class MinerTask {
         targetCell = new BlockPos(origin.getX() + step[0], floorY, origin.getZ() + step[1]);
         digQueue.clear();
         for (int dy = height - 1; dy >= 0; dy--) digQueue.add(targetCell.above(dy));
-        oresScanned = false;
+        neighboursScanned = false;
         settleWait = 0;
         gravelTorchPlaced = false;
         state = State.DIG;
@@ -474,7 +474,7 @@ public final class MinerTask {
             digQueue.poll();
         }
 
-        if (digQueue.isEmpty() && !oresScanned) {
+        if (digQueue.isEmpty() && !neighboursScanned) {
             // Bevor die Saeule als fertig gilt: alles wieder einreihen, was
             // waehrend des Grabens hineingerutscht ist. Eine Fackel vom Trick
             // zaehlt mit, die ist in einem Tick weg.
@@ -491,10 +491,9 @@ public final class MinerTask {
                 return;
             }
             if (digQueue.isEmpty()) {
-                oresScanned = true;
+                neighboursScanned = true;
                 Component danger = scanNeighbours(level);
                 if (danger != null) { stop(danger); return; }
-                // Gefundenes Erz faellt unten direkt in den Abbau, ohne Wartetick.
             }
         }
         if (digQueue.isEmpty()) {
@@ -529,9 +528,15 @@ public final class MinerTask {
     }
 
     /**
-     * Nachbarn der frisch geoeffneten Saeule absuchen. Erz kommt in die Queue,
-     * Sculk fuehrt zum sofortigen Abbruch: der Mod schleicht nicht und wuerde
-     * jeden Shrieker ausloesen.
+     * Nachbarn der frisch geoeffneten Saeule absuchen. Sculk fuehrt zum
+     * sofortigen Abbruch: der Mod schleicht nicht und wuerde jeden Shrieker
+     * ausloesen.
+     *
+     * Erz in den Waenden wird bewusst NICHT mitgenommen. Was innerhalb des
+     * Bereichs liegt, holt die Spirale ohnehin, wenn sie dort ankommt - sie
+     * raeumt jede Zelle. Alles andere liegt ueber der Decke, unter der Sohle,
+     * hinter dem letzten Ring oder im Kern um die Pyramide, und dort hat der
+     * Mod nichts abzubauen. Unter der Sohle hinterliess es zudem Loecher.
      */
     private Component scanNeighbours(ClientLevel level) {
         for (int dy = 0; dy < height; dy++) {
@@ -545,12 +550,8 @@ public final class MinerTask {
             }
             for (Direction d : Direction.values()) {
                 BlockPos n = c.relative(d);
-                Block b = level.getBlockState(n).getBlock();
-                if (SCULK.contains(b)) {
+                if (SCULK.contains(level.getBlockState(n).getBlock())) {
                     return Chat.tr("deepmine.stop.sculk", Chat.pos(n));
-                }
-                if (ORES.contains(b) && !digQueue.contains(n)) {
-                    digQueue.add(n);
                 }
             }
         }

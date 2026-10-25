@@ -90,8 +90,9 @@ replacing it.
 
 **Mines** with the Silk Touch pickaxe for ores and for anything on the Silk
 list (gravel by default, because Fortune III turns gravel into nothing but
-flint), with the normal pickaxe for everything else. Ore in the walls of a
-finished column is taken along.
+flint), with the normal pickaxe for everything else. Nothing outside the
+corridor is touched: ore in the ceiling, the floor or the outer wall stays
+where it is, and ore inside the area is mined when the spiral gets there.
 
 **Lights** the corridor whenever block light drops to 0 — exactly the hostile
 spawn condition since 1.18. A torch gives 14 and loses one per block, so that

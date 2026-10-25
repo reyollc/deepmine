@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Ore next to a finished column is no longer mined. It sat above the ceiling,
+  below the floor, beyond the last ring or in the core around the pyramid, and
+  mining it below the floor left holes. Ore inside the area is still mined, with
+  Silk Touch, when the spiral reaches it.
+
 ## 1.11.1
 
 - Homepage, source and issue tracker links in the mod metadata, so the in-game
