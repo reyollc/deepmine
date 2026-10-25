@@ -137,6 +137,10 @@ public final class MinerTask {
 
     private State state = State.PICK;
     private State resumeState = State.PICK;   // wohin nach Kampf oder Einlagern zurueck
+    // Eigener Platz fuers Heilen: Essen und Kampf unterbrechen das Heilen und
+    // setzen dabei resumeState auf HEAL. Laege das Grabziel ebenfalls dort,
+    // waere es danach weg und das Heilen spraenge in sich selbst zurueck.
+    private State healResume = State.PICK;
     private int[] currentStep;
     private BlockPos targetCell;
     private boolean oresScanned;
@@ -343,7 +347,7 @@ public final class MinerTask {
         // Ein gestoppter Mod hilft einem AFK-Spieler nicht, ein wartender schon.
         if (isMining() && p.getHealth() < healthFloor) {
             mc.gameMode.stopDestroyBlock();
-            resumeState = state;
+            healResume = state;
             state = State.HEAL;
             healTicks = 0;
             Chat.warn("deepmine.heal.start", Chat.hl((int) p.getHealth()));
@@ -844,7 +848,7 @@ public final class MinerTask {
         p.setDeltaMovement(0.0, p.getDeltaMovement().y, 0.0);
 
         if (p.getHealth() >= HEAL_UNTIL) {
-            state = resumeState;
+            state = healResume;
             Chat.ok("deepmine.heal.done", Chat.hl((int) p.getHealth()));
             return;
         }
