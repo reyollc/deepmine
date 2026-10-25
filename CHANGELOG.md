@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.11.1
+
+- Homepage, source and issue tracker links in the mod metadata, so the in-game
+  mod list links to the Modrinth page and the repository.
+
 ## 1.11.0
 
 - Supports Minecraft 26.3 alongside 26.2, from the same jar.
